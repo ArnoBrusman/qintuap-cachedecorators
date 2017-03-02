@@ -9,11 +9,17 @@ use Illuminate\Support\ServiceProvider;
  */
 class CacheServiceProvider extends ServiceProvider {
     
-    function boot() {
+    function register() {
         
-        $this->app->singleton(CacheDecorator::class, function() {
-            $decorators = config('qintuap.decorators');
-            $decorator = new CacheDecorator($decorators);
+        $this->app->singleton(CacheDecorator::class, function($app) {
+            $factory = $app->make(Factory::class);
+            $decorator = new CacheDecorator();
+            $decorator->addFactory($factory);
+            return $decorator;
+        });
+        $this->app->singleton(Factory::class, function() {
+            $decorators = config('qintuap.cache_decorators');
+            $decorator = new Factory($decorators);
             return $decorator;
         });
     }

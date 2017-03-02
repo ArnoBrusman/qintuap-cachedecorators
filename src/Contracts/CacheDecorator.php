@@ -3,7 +3,7 @@
 namespace Qintuap\CacheDecorators\Contracts;
 
 /**
- * Description of CacheDecorator
+ * Decorator to adds caching functionality to object methods.
  *
  * @author Premiums
  */

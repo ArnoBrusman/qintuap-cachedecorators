@@ -3,6 +3,7 @@
 namespace Qintuap\CacheDecorators\Contracts;
 
 /**
+ * The methods in this object are cachable.
  *
  * @author Premiums
  */

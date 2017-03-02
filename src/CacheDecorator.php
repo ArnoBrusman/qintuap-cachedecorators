@@ -7,24 +7,37 @@ namespace Qintuap\CacheDecorators;
  */
 class CacheDecorator {
     
-    var $decorators;
+    var $factories = [];
     
-    public function __construct($decorators)
-    {
-        $this->decorators = $decorators;
+    
+    function addFactory($factory) {
+        $this->factories[] = $factory;
     }
     
+    function decorate($decoratable) {
+        $factory = $this->getFactory($decoratable);
+        if(!$factory) {
+            throw new \Exception('no factory found');
+        }
+        return $factory->make($decoratable);
+    }
+    
+    function getFactory($decoratable) {
+        foreach ($this->factories as $factory) {
+            if($factory->canDecorate($decoratable)) {
+                return $factory;
+            }
+        }
+        \Debugbar::addMessage($decoratable, 'warning');
+        throw new \Exception('Cannot decorate object');
+    }
+            
     function canDecorate($object) {
-        foreach ($this->decorators as $decoratable => $decorator) {
-            if($object instanceof $decoratable) {
+        foreach ($this->factories as $factory) {
+            if($factory->canDecorate($object)) {
                 return true;
             }
         }
         return false;
     }
-    
-    function decorate($decoratable) {
-        return new $this->decorators[get_class($decoratable)](app('cache.store'), $decoratable);
-    }
-    
 }
