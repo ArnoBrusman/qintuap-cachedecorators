@@ -8,6 +8,13 @@ namespace Qintuap\CacheDecorators;
 class Factory {
     
     var $namespaces = [];
+    /**
+     * Set to true if there is an expectation that a class named 'SimpleCache' exists in the namespace.
+     * That class will be used if no other cache options available.
+     * @var type 
+     */
+    var $use_simple = false;
+    var $simple_cache = 'Simple';
     
     public function __construct($namespaces = [])
     {
@@ -56,20 +63,40 @@ class Factory {
     protected function getConcreteClass($namespace, $object) {
         
         if(is_array($namespace)) {
-            foreach ($namespace as $v) {
-                $class = $this->getConcreteClass($v,$object);
-                if($class) {
-                    return $class;
-                }
-            }
+            $concrete = $this->getConcreteClassArray($namespace, $object);
         } else {
-            $name = class_basename($object);
-            $class = $namespace . '\\' . $name . 'Cache';
-            if(class_exists($class)) {
-                return $class;
-            } else {
-                return false;
+            $concrete = $this->_getConcreteClass($namespace, $object);
+            if(!$concrete && $this->use_simple) {
+                $concrete = $this->_getConcreteClass($namespace, $this->simple_cache);
             }
+        }
+        return $concrete;
+    }
+    
+    protected function getConcreteClassArray(array $namespace, $object) {
+        foreach ($namespace as $v) {
+            $class = $this->getConcreteClass($v,$object);
+            if($class) {
+                return $class;
+            }
+        }
+        // still here?
+        foreach ($namespace as $v) {
+            $class = $this->_getConcreteClass($v,$object);
+            if($class) {
+                return $class;
+            }
+        }
+    }
+    protected function _getConcreteClass($namespace, $object, $name = null) {
+        if(is_null($name)) {
+            $name = class_basename($object);
+        }
+        $class = $namespace . '\\' . $name . 'Cache';
+        if(class_exists($class)) {
+            return $class;
+        } else {
+            return false;
         }
     }
     

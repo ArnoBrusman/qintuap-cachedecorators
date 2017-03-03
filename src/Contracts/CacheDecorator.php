@@ -7,13 +7,12 @@ namespace Qintuap\CacheDecorators\Contracts;
  *
  * @author Premiums
  */
-interface CacheDecorator extends CacheableMethods
+interface CacheDecorator
 {
 
     function cached($bool = true);
     
     /** generic methods **/
-   
 
     function all($columns = ['*']);
     

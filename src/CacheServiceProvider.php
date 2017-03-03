@@ -11,9 +11,9 @@ class CacheServiceProvider extends ServiceProvider {
     
     function register() {
         
-        $this->app->singleton(CacheDecorator::class, function($app) {
+        $this->app->singleton(DecoCache::class, function($app) {
             $factory = $app->make(Factory::class);
-            $decorator = new CacheDecorator();
+            $decorator = new DecoCache();
             $decorator->addFactory($factory);
             return $decorator;
         });

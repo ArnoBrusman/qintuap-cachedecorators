@@ -3,11 +3,11 @@
 namespace Qintuap\CacheDecorators\Facades;
 
 use Illuminate\Support\Facades\Facade as Facade;
-use Qintuap\CacheDecorators\CacheDecorator as Decorator;
+use Qintuap\CacheDecorators\DecoCache as Decorator;
 /**
  * @author Premiums
  */
-class CacheDecorator extends Facade {
+class DecoCache extends Facade {
     
     /**
      * Get the binding in the IoC container

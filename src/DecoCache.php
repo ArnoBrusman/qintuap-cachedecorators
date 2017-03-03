@@ -2,10 +2,14 @@
 
 namespace Qintuap\CacheDecorators;
 
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+
 /**
+ * Cache decorator helper
  * @author Premiums
  */
-class CacheDecorator {
+class DecoCache {
     
     var $factories = [];
     
@@ -40,4 +44,10 @@ class CacheDecorator {
         }
         return false;
     }
+    
+    // Get tag of an ORM model object.
+    function makeModelTag(Model $object) {
+        return get_class($object);
+    }
+    
 }
