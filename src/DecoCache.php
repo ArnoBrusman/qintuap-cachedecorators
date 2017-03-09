@@ -49,5 +49,9 @@ class DecoCache {
     function makeModelTag(Model $object) {
         return get_class($object);
     }
+    function makeRelationTag(Model $object, $relationName)
+    {
+        return get_class($object->$relationName()->getRelated());
+    }
     
 }
