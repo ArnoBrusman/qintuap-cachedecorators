@@ -46,7 +46,7 @@ class Factory {
             $decorator = new $decoratorClass(app('cache.store'), $decoratable);
         } elseif (config('app.env') !== 'production') {
             $name = class_basename($decoratable);
-            \Debugbar::addMessage('note: cache decorator not defined for ' . $name, 'info');
+            \Debugbar::addMessage('note: cache decorator not defined for ' . $name, 'warning');
             $decorator = $decoratable;
         }
         return $decorator;
