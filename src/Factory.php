@@ -40,7 +40,7 @@ class Factory {
         return false;
     }
     
-    function make($decoratable) {
+    function make($decoratable,$name = null) {
         $decoratorClass = $this->getDecorator($decoratable);
         if($decoratorClass) {
             $decorator = new $decoratorClass(app('cache.store'), $decoratable);
