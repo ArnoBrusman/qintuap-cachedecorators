@@ -47,11 +47,11 @@ class DecoCache {
     
     // Get tag of an ORM model object.
     function makeModelTag(Model $object) {
-        return get_class($object);
+        return $object->getTable();
     }
     function makeRelationTag(Model $object, $relationName)
     {
-        return get_class($object->$relationName()->getRelated());
+        return $object->$relationName()->getRelated()->getTable();
     }
     
 }
