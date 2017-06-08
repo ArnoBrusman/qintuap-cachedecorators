@@ -1,8 +1,8 @@
 <?php
 
-use Advanza\Repositories\Query;
+namespace Qintuap\CacheDecorators\Query;
 
-use Illuminate\Database\Query\Builder as BaseBuilder;
+use Qintuap\Repositories\Query\Builder as BaseBuilder;
 
 /**
  * Gotten from https://github.com/dwightwatson/rememberable/blob/master/src/Query/Builder.php
